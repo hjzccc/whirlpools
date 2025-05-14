@@ -1,6 +1,5 @@
 use anchor_lang::prelude::*;
 use anchor_spl::associated_token::AssociatedToken;
-use anchor_spl::metadata::Metadata;
 use anchor_spl::token::{self, Mint, Token, TokenAccount};
 
 use crate::state;
@@ -51,8 +50,6 @@ pub struct OpenPositionWithMetadata<'info> {
     pub rent: Sysvar<'info, Rent>,
     pub associated_token_program: Program<'info, AssociatedToken>,
 
-    pub metadata_program: Program<'info, Metadata>,
-
     /// CHECK: checked via account constraints
     #[account(address = WP_NFT_UPDATE_AUTH)]
     pub metadata_update_auth: UncheckedAccount<'info>,
@@ -79,16 +76,5 @@ pub fn handler(
         tick_upper_index,
     )?;
 
-    mint_position_token_with_metadata_and_remove_authority(
-        whirlpool,
-        position_mint,
-        &ctx.accounts.position_token_account,
-        &ctx.accounts.position_metadata_account,
-        &ctx.accounts.metadata_update_auth,
-        &ctx.accounts.funder,
-        &ctx.accounts.metadata_program,
-        &ctx.accounts.token_program,
-        &ctx.accounts.system_program,
-        &ctx.accounts.rent,
-    )
+    Ok(())
 }

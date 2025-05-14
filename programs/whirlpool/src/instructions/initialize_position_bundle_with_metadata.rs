@@ -1,6 +1,5 @@
 use anchor_lang::prelude::*;
 use anchor_spl::associated_token::AssociatedToken;
-use anchor_spl::metadata::Metadata;
 use anchor_spl::token::{self, Mint, Token, TokenAccount};
 
 use crate::constants::nft::whirlpool_nft_update_auth::ID as WPB_NFT_UPDATE_AUTH;
@@ -50,8 +49,6 @@ pub struct InitializePositionBundleWithMetadata<'info> {
     pub system_program: Program<'info, System>,
     pub rent: Sysvar<'info, Rent>,
     pub associated_token_program: Program<'info, AssociatedToken>,
-
-    pub metadata_program: Program<'info, Metadata>,
 }
 
 pub fn handler(ctx: Context<InitializePositionBundleWithMetadata>) -> Result<()> {
@@ -62,21 +59,21 @@ pub fn handler(ctx: Context<InitializePositionBundleWithMetadata>) -> Result<()>
 
     let bump = ctx.bumps.position_bundle;
 
-    mint_position_bundle_token_with_metadata_and_remove_authority(
-        &ctx.accounts.funder,
-        &ctx.accounts.position_bundle,
-        position_bundle_mint,
-        &ctx.accounts.position_bundle_token_account,
-        &ctx.accounts.position_bundle_metadata,
-        &ctx.accounts.metadata_update_auth,
-        &ctx.accounts.metadata_program,
-        &ctx.accounts.token_program,
-        &ctx.accounts.system_program,
-        &ctx.accounts.rent,
-        &[
-            b"position_bundle".as_ref(),
-            position_bundle_mint.key().as_ref(),
-            &[bump],
-        ],
-    )
+    // mint_position_bundle_token_with_metadata_and_remove_authority(
+    //     &ctx.accounts.funder,
+    //     &ctx.accounts.position_bundle,
+    //     position_bundle_mint,
+    //     &ctx.accounts.position_bundle_token_account,
+    //     &ctx.accounts.position_bundle_metadata,
+    //     &ctx.accounts.metadata_update_auth,
+    //     &ctx.accounts.token_program,
+    //     &ctx.accounts.system_program,
+    //     &ctx.accounts.rent,
+    //     &[
+    //         b"position_bundle".as_ref(),
+    //         position_bundle_mint.key().as_ref(),
+    //         &[bump],
+    //     ],
+    // )
+    Ok(())
 }
